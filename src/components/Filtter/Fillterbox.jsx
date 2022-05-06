@@ -1,26 +1,78 @@
 import "./filter.css";
-import { useState } from "react";
-export default function Fillterbox() {
-  const [brand, setBrand] = useState(["abhi",  "kay", "say", "maj" ,"adfa","asdfa","fdadf","adfa","asdfa","fdadf","adfa","asdfa","fdadf"]);
-  return (
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+export default function Fillterbox({ API, title }) {
+  console.log(API,"apiapiapi")
+  // const [brand, setBrand] = useState([]);
+  // const FilterData = () => {
+  //   // fatch Api
+  //   axios.get(`${API}`).then((data) => {
+  //     setBrand(data.data);
+  //     // console.log(data.data);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   FilterData();
+  // }, []);
+
+  return title=="DISCOUNT"?(
     <div className="filter-box">
-      <h4 className="filter-brands">BRANDS</h4>
-      <input
-        type="text"
-        className="filter-input"
-        placeholder="Search Brand"
-        onChange={(e) => console.log(e.target.value)}
-      />
-      {brand.map((e, i) => (
+    <p className="filter-brands">{title}</p>
+    <p className="filter-sub-box">
+          {" "}
+          <input type="checkbox" />{" "}
+          <span className="name-quintity">
+            <span>Less then 10%</span>
+            <span className="filter-quinty">17</span>
+          </span>
+        </p>
         <p className="filter-sub-box">
           {" "}
           <input type="checkbox" />{" "}
           <span className="name-quintity">
-            <span>abhishek</span>
-            <span className="filter-quinty">i</span>
+            <span>10% and above</span>
+            <span className="filter-quinty">96</span>
+          </span>
+        </p>
+        <p className="filter-sub-box">
+          {" "}
+          <input type="checkbox" />{" "}
+          <span className="name-quintity">
+            <span>20% and above</span>
+            <span className="filter-quinty">61</span>
+          </span>
+        </p>
+        <p className="filter-sub-box">
+          {" "}
+          <input type="checkbox" />{" "}
+          <span className="name-quintity">
+            <span>30% and above</span>
+            <span className="filter-quinty">11</span>
+          </span>
+        </p>
+    </div>
+  ):(
+    <div className="filter-box">
+      <p className="filter-brands">{title}</p>
+      <input
+        type="text"
+        className="filter-input"
+        placeholder="Search Brand"
+        onChange={(event) => console.log(event.target.value)}
+      />
+      {API.map((d, i) => (
+        <p className="filter-sub-box">
+          {" "}
+          <input type="checkbox" />{" "}
+          <span className="name-quintity">
+            <span>{d.product}</span>
+            <span className="filter-quinty">{d.quintity}</span>
           </span>
         </p>
       ))}
     </div>
   );
+
 }

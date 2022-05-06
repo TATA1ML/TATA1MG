@@ -1,29 +1,39 @@
 import "./zandu.css";
-import axios from "axios";
+// import axios from "axios";
 import { useState, useEffect } from "react";
+import {useDispatch,useSelector} from "react-redux"
+import {ProductAction} from "../../../redux/action/productAction"
 import Fillter from "../../Filtter/Fillter"
 export default function Zandu() {
-  // set zandu data in variable
-  const [zanduData, setZanduData] = useState([]);
 
+  const dispatch = useDispatch()
+  const productReducer  = useSelector(state=>state.productReducer)
+  // set zandu data in variable
+  const {products,error} = productReducer
+  console.log(products,"products aara h",error)
   // ! get data from Api
-  const getZanduData = () => {
-    // fatch Api
-    axios.get(" http://localhost:8080/zandu").then((data) => {
-      // set data in zanduData
-      setZanduData(data.data);
-    });
-  };
+  // const getZanduData = () => {
+  //   // fatch Api
+  //   axios.get(" http://localhost:8080/zandu").then((data) => {
+     
+  //    // set data in zanduData
+  //     setZanduData(data.data);
+  
+  //   });
+  // };
+  //  ! 
 
   useEffect(() => {
-    getZanduData();
+    // getZanduData();
+    dispatch(ProductAction())
   }, []);
 
   return (
     <div className="Zandu-Fillter-page">
     <Fillter />
       <div className="Zandu-page">
-        {zanduData.map((data) => (
+        {products.map((data) => (
+
           <div className="Zandu-main-contaner" key={data.id}>
             <div className="Zandu-upper-contaner">
               <img src={data.img} alt="img" srcset="" className="img" />
@@ -31,16 +41,16 @@ export default function Zandu() {
             <div className="Zandu-middle-contaner">
               <p className="title">{data.title}</p>
               <p className="product-info">
-                <span>{data.paking}</span> of{" "}
+                <span>{data.form}</span> of{" "}
                 <span>
                   {data.quintity} {data.unit}{" "}
                 </span>
                 <span>{data.type}</span>
               </p>
-              {data.start !== "" ? (
+              {data.star !== "" ? (
                 <p className="star-rating">
                   <span className="star">
-                    {data.start} <span class="fa fa-star checked"></span>
+                    {data.star} <span class="fa fa-star checked"></span>
                   </span>
                   &nbsp;&nbsp;{data.rating} rating
                 </p>
